@@ -2147,6 +2147,1465 @@ Diff. Automation Frameworks
 	5. Cucumber BDD Framework
 
 --------------------------------------------------------------------------------------------------------
+OBJECT REPOSITORY
+DATE = 19-08-2024
+
+#Locators for Primus bank with xpath
+Url = http://primusbank.qedgetech.com/
+Objuser = //input[@id='txtuId']
+Objpass = //input[@id='txtPword']
+Objlogin = //input[@id='login']
+# Test data foor login
+Enteruser = Admin
+Enterpass =Admin
+# Locators for Branch creation
+ObjBranches = (//img)[5]
+ObjNewBranch = //input[@id='BtnNewBR']
+ObjBname = //input[@id='txtbName']
+ObjAddress1 = //input[@id='txtAdd1']
+ObjAddress2 = //input[@id='Txtadd2']
+ObjAddress3 = //input[@id='txtadd3']
+ObjArea = //input[@id='txtArea']
+Objzip = //input[@id='txtZip']
+ObjCountry = //select[@id='lst_counrtyU']
+Objstate = //select[@id='lst_stateI']
+Objcity = //select[@id='lst_cityI']
+Objsubmit = //input[@id='btn_insert']
+# test data for new branch creation
+EnterbranchN = kadiri
+EnterAdd1 = Anantapur
+EnterAdd2 = Madanapalli
+EnterAdd3 = Srnagar
+EnterArea = Kaadiri
+Enterzip = 24569
+SelectCountry = INDIA
+SelectState = GOA
+SelectCity = GOA
+# Locator values for Role creation
+ObjRoles = //img[@src='images/Roles_but.jpg'] 
+ObjNewRole = //input[@id='btnRoles']
+ObjRoleName = //input[@id='txtRname']
+ObjRoleDesc = //input[@id='txtRDesc']
+ObjRoleType = //select[@id='lstRtypeN']
+ObjSubmitbtn = //input[@id='btninsert']
+# test data for new Role creation
+EnterRole = clerk
+EnterRoleDesc = iam working as a clerk
+SelectRoletype = E
+# Locator for logout
+ObjLogout = (//img)[4]
+
+=====================================================================
+package aub19;
+
+import java.io.FileInputStream;
+import java.time.Duration;
+import java.util.Properties;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+public class Using_Property {
+WebDriver driver;
+Properties conpro;
+@BeforeMethod
+public void setUp()throws Throwable
+{
+	conpro = new Properties();
+	//load property file
+	conpro.load(new FileInputStream("primus.properties"));
+	driver = new ChromeDriver();
+	driver.manage().window().maximize();
+	driver.get(conpro.getProperty("Url"));
+	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	driver.findElement(By.xpath(conpro.getProperty("Objuser"))).sendKeys(conpro.getProperty("Enteruser"));
+	driver.findElement(By.xpath(conpro.getProperty("Objpass"))).sendKeys(conpro.getProperty("Enterpass"));
+	driver.findElement(By.xpath(conpro.getProperty("Objlogin"))).click();
+}
+@Test
+public void branchcreation() throws Throwable
+{
+	driver.findElement(By.xpath(conpro.getProperty("ObjBranches"))).click();
+	driver.findElement(By.xpath(conpro.getProperty("ObjNewBranch"))).click();
+	driver.findElement(By.xpath(conpro.getProperty("ObjBname"))).sendKeys(conpro.getProperty("EnterbranchN"));
+	driver.findElement(By.xpath(conpro.getProperty("ObjAddress1"))).sendKeys(conpro.getProperty("EnterAdd1"));
+	driver.findElement(By.xpath(conpro.getProperty("ObjAddress2"))).sendKeys(conpro.getProperty("EnterAdd2"));
+	driver.findElement(By.xpath(conpro.getProperty("ObjAddress3"))).sendKeys(conpro.getProperty("EnterAdd3"));
+	driver.findElement(By.xpath(conpro.getProperty("ObjArea"))).sendKeys(conpro.getProperty("EnterArea"));
+	driver.findElement(By.xpath(conpro.getProperty("Objzip"))).sendKeys(conpro.getProperty("Enterzip"));
+	new Select(driver.findElement(By.xpath(conpro.getProperty("ObjCountry")))).selectByVisibleText(conpro.getProperty("SelectCountry"));
+	Thread.sleep(3000);
+	new Select(driver.findElement(By.xpath(conpro.getProperty("Objstate")))).selectByVisibleText(conpro.getProperty("SelectState"));
+	Thread.sleep(3000);
+	new Select(driver.findElement(By.xpath(conpro.getProperty("Objcity")))).selectByVisibleText(conpro.getProperty("SelectCity"));
+	Thread.sleep(3000);
+	driver.findElement(By.xpath(conpro.getProperty("Objsubmit"))).click();
+	String alerttext = driver.switchTo().alert().getText();
+	System.out.println(alerttext);
+	Thread.sleep(3000);
+	driver.switchTo().alert().accept();
+	
+}
+@Test
+public void roleCreation() throws Throwable
+{
+	driver.findElement(By.xpath(conpro.getProperty("ObjRoles"))).click();
+	driver.findElement(By.xpath(conpro.getProperty("ObjNewRole"))).click();
+	driver.findElement(By.xpath(conpro.getProperty("ObjRoleName"))).sendKeys(conpro.getProperty("EnterRole"));
+	driver.findElement(By.xpath(conpro.getProperty("ObjRoleDesc"))).sendKeys(conpro.getProperty("EnterRoleDesc"));
+	new Select(driver.findElement(By.xpath(conpro.getProperty("ObjRoleType")))).selectByVisibleText(conpro.getProperty("SelectRoletype"));
+	Thread.sleep(2000);
+	driver.findElement(By.xpath(conpro.getProperty("ObjSubmitbtn"))).click();
+	String alerttext = driver.switchTo().alert().getText();
+	System.out.println(alerttext);
+	Thread.sleep(3000);
+	driver.switchTo().alert().accept();
+		
+}
+@AfterMethod
+public void tearDown()
+{
+	driver.findElement(By.xpath(conpro.getProperty("ObjLogout"))).click();
+	driver.quit();
+}
+}
+
+DATE = 20 -08-2024 
+
+EXTENT REPORST
+
+package aug20;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
+public class Advance_Reports {
+ExtentReports reports;
+ExtentTest logger;
+WebDriver driver;
+@BeforeTest
+public void generateReports()
+{
+	//define path of html
+	reports = new ExtentReports("./ExtenReports/Demo.html");
+}
+@BeforeMethod
+public void setUp()
+{
+	driver = new ChromeDriver();
+	driver.manage().window().maximize();
+	driver.get("https:/google.com");
+}
+@Test
+public void firstTestCase()
+{
+	logger = reports.startTest("Pass Test");
+	logger.assignAuthor("Ranga");
+	String Expected ="Google";
+	String Actual = driver.getTitle();
+	if(Actual.equalsIgnoreCase(Expected))
+	{
+		logger.log(LogStatus.PASS, "Title is Matching::::"+Expected+"---------"+Actual);
+	}
+	else
+	{
+		logger.log(LogStatus.FAIL, "Title is Not Matching::::"+Expected+"---------"+Actual);
+	}
+	
+	
+}
+@Test
+public void seconTestCase()
+{
+	logger = reports.startTest("Fail Test");
+	logger.assignAuthor("Ranga");
+	String Expected ="Gmail";
+	String Actual = driver.getTitle();
+	if(Actual.equalsIgnoreCase(Expected))
+	{
+		logger.log(LogStatus.PASS, "Title is Matching::::"+Expected+"---------"+Actual);
+	}
+	else
+	{
+		logger.log(LogStatus.FAIL, "Title is Not Matching::::"+Expected+"---------"+Actual);
+	}
+}
+@AfterMethod
+public void tearDown()
+{
+	reports.endTest(logger);
+	reports.flush();
+	driver.quit();
+}
+}
+
+DATA  DRIVEN FRAME WORK
+DATE = 21-08-2024
+
+Test Automation Framework Interview Questions and Answers:
+
+1. What is a Framework?
+A framework defines a set of rules or best practices which we can follow in a systematic way to achieve the desired results.
+The structural way to implement the scripts for better maintenance is known as framework.
+Maintenance means how we are implementing the script. Is it easy to analyze, update, execute and getting the test report.
+Automation Frameworks?
+•	Modular Testing Framework
+•	Data Driven Testing Framework
+•	Keyword Driven Testing Framework
+•	Hybrid Testing Framework
+
+3. Why Framework?
+In a test automation project, we do perform different tasks by using different types of files like .xlsx, .txt, .properties, xml, etc. To organize and manage all the files and to finish all the tasks in a systematic approach we use a framework.
+
+4. Have you created any Framework?
+If you are a beginner: No, I didn’t get a chance to create a framework. I have used the framework which is already available.
+If you are an experienced tester: Yes, I have created a framework (Or) No, but I have involved in the creation of the framework.
+
+5. What are the advantages of using Test Automation Framework?
+1.	Saves time and money. Automation testing is faster in execution
+2.	Reusability of code. Create one time and execute multiple times with less or no maintenance
+3.	Easy reporting. It generates automatic reports after test execution
+4.	Easy for compatibility testing. It enables parallel execution in combination of different OS and browser environments
+5.	Low cost maintenance. It is cheaper compared to manual testing in a long run
+6.	Automated testing is more reliable
+7.	Automated testing is more powerful and versatile
+8.	It is mostly used for regression testing. Supports execution of repeated test cases
+9.	Maximum coverage. It helps to increase the test coverage
+
+6. Which Test Automation Framework you are using and why?
+Some of the Test Automation Frameworks are:
+•	Data Driven Testing Framework
+•	Keyword Driven Testing Framework
+•	Hybrid Testing Framework
+
+7. Mention the name of the framework which ‘you are currently using’ or which ‘you have hands on experience’.
+Example: 
+Answers should be, Already the organization which I am working for is using that particular framework or I have an experience on that particular framework or Its easy to handle all my scripts to execute and generate logs, screenshots and reports by using this framework.
+
+8. Can you explain the Framework  
+
+9. What is Automation testing? What are the advantages of Automation Testing?
+Automation testing is the process of testing the software using an automation tool to find the defects. In this process, executing the test scripts and generating the results are performed automatically by automation tools. Some most popular tools to do automation testing are HP QTP/UFT,  etc.,
+For advantages refer to question 5 of this post “Test Automation Framework Interview Questions”
+
+10. What are the most popular testing tools for functional testing?
+1.	Selenium
+2.	QTP(Quick Test Professional) / UFT(Unified Functional Testing)
+11. Why do you prefer Selenium Automation Tool?
+1.	Free and open source
+2.	Have large user base and helping communities
+3.	Cross browser compatibility
+4.	Platform compatibility
+5.	Multiple programming languages support
+
+12. What type of test cases do you pick up to automate?
+I focus on the test cases which should be executed in a repetitive manner such as regression test cases, smoke and sanity test cases
+
+13. What type of test cases you won’t pick up to automate?
+Before picking up the test cases to automate, I do check whether the application is stable or not. So based on this, I don’t pickup test cases when the AUT changes frequently and the test cases which I run rarely and run only one time. When I do usability and exploratory testing.
+
+14. How many test cases you have automated per day?
+It depends on Test case scenario complexity and length. I did automate 2-5 test scenarios per day when the complexity is limited. Sometimes just 1 or fewer test scenarios in a day when the complexity is high.
+
+15. How you build Object Repository in your project? 
+In QTP, there is an Object Repository concept. When a user records a test, the objects and its properties are captured by default in an Object Repository. QTP uses this Object Repository to play back the scripts. Coming to Selenium, there is no default Object Repository concept. It doesn’t mean that there is no Object Repository in Selenium. Even though there is no default one still we could create our own. In Selenium, we call objects as locators (such as ID, Name, Class Name, Tag Name, Link Text, Partial Link Text, XPath, and CSS). Object repository is a collection of objects. One of the ways to create Object Repository is to place all the locators in a separate file (i.e., properties file). But the best way is to use Page Object Model. In the Page Object Model Design Pattern, each web page is represented as a class. All the objects related to a particular page of a web application are stored in a class.
+
+
+EXCEL METHODES
+DATE 24-08-2024
+
+package utilities;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class ExcelFileUtil {
+XSSFWorkbook wb;
+//creating constructor for reading excel path
+public ExcelFileUtil(String excelpath)throws Throwable
+{
+	FileInputStream fi = new FileInputStream(excelpath);
+	wb = new XSSFWorkbook(fi);
+}
+//count no of rows ina sheet
+public int rowCount(String sheetname)
+{
+	return wb.getSheet(sheetname).getLastRowNum();
+}
+//method for reading cell data
+public String getCellData(String sheetname,int row,int column)
+{
+	String data="";
+	if(wb.getSheet(sheetname).getRow(row).getCell(column).getCellType()==CellType.NUMERIC)
+	{
+		int celldata =(int) wb.getSheet(sheetname).getRow(row).getCell(column).getNumericCellValue();
+		data =String.valueOf(celldata);
+	}
+	else
+	{
+		data =wb.getSheet(sheetname).getRow(row).getCell(column).getStringCellValue();
+	}
+	return data;
+}
+//method for writing status into new wb
+public void setCellData(String sheetname,int row,int column,String status,String WriteExcel)throws Throwable
+{
+	//get sheet from wb
+	XSSFSheet ws = wb.getSheet(sheetname);
+	//getrow from sheet
+	XSSFRow rowNum =ws.getRow(row);
+	//create cell
+	XSSFCell cell = rowNum.createCell(column);
+	cell.setCellValue(status);
+	if(status.equalsIgnoreCase("Pass"))
+	{
+		XSSFCellStyle style = wb.createCellStyle();
+		XSSFFont font = wb.createFont();
+		font.setColor(IndexedColors.GREEN.getIndex());
+		font.setBold(true);
+		style.setFont(font);
+		rowNum.getCell(column).setCellStyle(style);
+	}
+	else if(status.equalsIgnoreCase("Fail"))
+	{
+		XSSFCellStyle style = wb.createCellStyle();
+		XSSFFont font = wb.createFont();
+		font.setColor(IndexedColors.RED.getIndex());
+		font.setBold(true);
+		style.setFont(font);
+		rowNum.getCell(column).setCellStyle(style);
+	}
+	else if(status.equalsIgnoreCase("Blocked"))
+	{
+		XSSFCellStyle style = wb.createCellStyle();
+		XSSFFont font = wb.createFont();
+		font.setColor(IndexedColors.BLUE.getIndex());
+		font.setBold(true);
+		style.setFont(font);
+		rowNum.getCell(column).setCellStyle(style);
+	}
+	FileOutputStream fo =new FileOutputStream(WriteExcel);
+	wb.write(fo);
+	
+	
+}
+public static void main(String[] args) throws Throwable {
+	ExcelFileUtil xl = new ExcelFileUtil("D:/Sample.xlsx");
+	int rc =xl.rowCount("Emp");
+	System.out.println(rc);
+	//iterate all rows
+	for(int i=1;i<=rc;i++)
+		
+	{
+		String fname = xl.getCellData("Emp", i, 0);
+		String mname = xl.getCellData("Emp", i, 1);
+		String lname = xl.getCellData("Emp", i, 2);
+		String eid = xl.getCellData("Emp", i, 3);
+		System.out.println(fname+"    "+mname+"    "+lname+"   "+eid);
+		//write status as pass
+		//xl.setCellData("emp", i, 4, "pass", "D:/Results.xlsx");
+		//xl.setCellData("emp", i, 4, "Fail", "D:/Results.xlsx");
+		xl.setCellData("emp", i, 4, "Blocked", "D:/Results.xlsx");
+	}
+}
+}
+
+EXCEL DATA
+
+DATA DRIVERN FRAME WORK
+24-08-2024
+
+//preparing property file
+======================================================
+#Locators for login
+Browser = chrome
+Url = http://webapp.qedgetech.com/
+ObjReset = //button[@id='btnreset']
+ObjUser = //input[@id='username']
+Objpass = //input[@id='password']
+ObjLogin = //button[@id='btnsubmit']
+ObjError = //div[contains(text(),'Incorrect user ID or password')]
+ObjOk = (//button[contains(text(),'OK')])[6]
+ObjLogout = (//a[starts-with(text(),' Logout')])[2]
+
+=============================================================
+//preparing apputil class
+==============================================================
+package config;
+
+import java.io.FileInputStream;
+import java.util.Properties;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Reporter;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+
+public class AppUtil {
+	public static WebDriver driver;
+	public static Properties conpro;
+	@BeforeTest
+	public static void setUp()throws Throwable
+	{
+		conpro = new Properties();
+		//load property file
+		conpro.load(new FileInputStream("./PropertyFiles/Environment.properties"));
+		if(conpro.getProperty("Browser").equalsIgnoreCase("chrome"))
+		{
+			driver = new ChromeDriver();
+			driver.manage().window().maximize();
+		}
+		else if(conpro.getProperty("Browser").equalsIgnoreCase("firefox"))
+		{
+			driver= new FirefoxDriver();
+		}
+		else
+		{
+			Reporter.log("Browser value is Not Matching",true);
+		}
+	}
+	@AfterTest
+	public static void tearDown()
+	{
+		driver.quit();
+	}
+
+}
+==========================================================================================
+//preparing Functionlibrary class
+========================================================================================
+package commonFunctions;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.testng.Reporter;
+
+import config.AppUtil;
+
+public class FunctionLibrary extends AppUtil {
+public static boolean adminLogin(String user,String pass) throws Throwable
+{
+	driver.get(conpro.getProperty("Url"));
+	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	driver.findElement(By.xpath(conpro.getProperty("ObjReset"))).click();
+	driver.findElement(By.xpath(conpro.getProperty("ObjUser"))).sendKeys(user);
+	driver.findElement(By.xpath(conpro.getProperty("Objpass"))).sendKeys(pass);
+	driver.findElement(By.xpath(conpro.getProperty("ObjLogin"))).click();
+	Thread.sleep(2000);
+	String Expected ="dashboard";
+	String Actual = driver.getCurrentUrl();
+	if(Actual.contains(Expected))
+	{
+		Reporter.log("Login success::"+Expected+"        "+Actual,true);
+		//click logout link
+		driver.findElement(By.xpath(conpro.getProperty("ObjLogout"))).click();
+		return true;
+	}
+	else
+	{
+	String error_Message = driver.findElement(By.xpath(conpro.getProperty("ObjError"))).getText();
+	Thread.sleep(2000);
+	driver.findElement(By.xpath(conpro.getProperty("ObjOk"))).click();
+	Reporter.log(error_Message+"     "+Expected+"        "+Actual,true);
+	return false;
+	}
+	
+	
+}
+}
+===================================================================================
+//preparing driverScript class
+======================================================================================
+package driverFactory;
+
+import java.io.File;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
+import commonFunctions.FunctionLibrary;
+import config.AppUtil;
+import utilities.ExcelFileUtil;
+
+public class DriverScript extends AppUtil{
+ExtentReports reports;
+ExtentTest logger;
+String inputpath="./FileInput/TestData.xlsx";
+String outputpath ="./FileOutput/DataDrivenResults.xlsx";
+@Test
+public void startTest() throws Throwable
+{
+	//define path of html report
+	reports = new ExtentReports("./Reports/Login.html");
+	//create reference object for excel file util class
+	ExcelFileUtil xl = new ExcelFileUtil(inputpath);
+	//count no of rows in login Sheet
+	int rc =xl.rowCount("Login");
+	Reporter.log("No of rows are::"+rc,true);
+	//iterate all rows in login sheet
+	for(int i=1;i<=rc;i++)
+	{
+		logger = reports.startTest("Login Test");
+		logger.assignAuthor("Ranga");
+		//read username and password cells
+		String username = xl.getCellData("Login", i, 0);
+		String password = xl.getCellData("Login", i, 1);
+		logger.log(LogStatus.INFO,username+"     "+password);
+		//call login method and assign parametrs
+		boolean res =FunctionLibrary.adminLogin(username, password);
+		if(res)
+		{
+			//if res is true write as login success into results cell
+			xl.setCellData("Login", i, 2, "Login success", outputpath);
+			//if res is true write as pass into status cell
+			xl.setCellData("Login", i, 3, "pass", outputpath);
+			logger.log(LogStatus.PASS, "Valid Username and password");
+		}
+		else
+		{
+			//adding screen shot for fail test
+			File screen =((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+			//copy screen shot into local system
+			FileUtils.copyFile(screen, new File("./Screenshot/Iteration/"+i+"Login.png"));
+			//if res is false write as login Fail into results cell
+			xl.setCellData("Login", i, 2, "Login Fail", outputpath);
+			//if res is false write as Fail into status cell
+			xl.setCellData("Login", i, 3, "Fail", outputpath);
+			logger.log(LogStatus.FAIL, "Invalid username and password");
+		}
+		
+		reports.endTest(logger);
+		reports.flush();
+		
+	}
+}
+}
+
+MAVEN 
+27-08-2024
+What is Maven?
+Maven is a software project management and comprehension tool primarily used with Java-based projects but that can also be used to manage projects in other programming languages like C# and Ruby. Maven helps manage builds, documentation, reporting, dependencies, software configuration management (SCM), releases and distribution. 
+Few Glossaries around Maven
+
+Maven's key features include:
+A standard, easy way to build projects in which unnecessary details are hidden
+A uniform build system, where a standard strategy is followed when building any project
+Quality project information, such as dependency lists, cross referenced sources and unit test reports
+Dependency management, including automatic updating and dependency closures
+The ability to handle multiple projects simultaneously
+Dynamic downloading of necessary Java libraries and plug-ins from Maven repositories
+Maven was created by Jason Van Zyl in 2002 as part of the Apache Turbine project. It became an Apache Software Foundation project in 2003. After that, several versions of Maven were released, including Maven v1.0, v2.0 and v3.0.
+Summary:
+•	Maven is an automation and management tool.
+•	It is written in Java Language and used to build and manage projects written in C#, Ruby, Scala, and other languages.
+•	Maven helps the developer to create a java-based project more easily.
+•	To configure the Maven, you need to use Project Object Model, which is stored in a pom.xml-file.
+
+
+
+
+Maven is a software project management and comprehension tool primarily used with Java-based projects but that can also be used to manage projects in other programming languages like C# and Ruby. Maven helps manage builds, documentation, reporting, dependencies, software configuration management (SCM), releases and distribution. 
+
+ Maven Local Repository
+This is the place where Maven stores all the project jars files or libraries or dependencies. By default the folder name is ‘.m2‘and by default the location in windows 7 is ‘C:\Users\john\.m2\repository ‘.
+ Maven Central Repository
+Maven central repository is the default location ‘http://mvnrepository.com/‘for Maven to download all the project dependency libraries. For any library required in the project, Maven first look in to the .m2 folder of Local Repository, if it does not find the required library then it looks in Central Repository and download the library in to local repository.
+Dependency Keyword
+Dependencies are the libraries, which are required by the project. For example Log4j jars, Apache Poi jars, Selenium Jars etc. Dependencies are mentioned in the Maven pom.xml like this:
+	 	<dependency>  		<groupId>org.seleniumhq.selenium</groupId>
+  		<artifactId>selenium-java</artifactId>
+  		<version>3.4.0</version>
+  	</dependency>
+ 
+Surefire Plugin
+The Surefire Plugin is used during the test phase of the build lifecycle to execute the unit tests of an application. It generates reports in 2 different file formats like plain text file, xml files and html files as well. Even if you are using TestNG or Junits framework for reporting, this plugin is must to use, as it helps Maven to identify tests.
+ 
+Maven POM.xml
+POM is Project Object Model XML file that contains information about the project and configuration details used by Maven to build the project. It contains default values for most projects. Some of the configuration that can be specified in the POM are the project dependencies, the plugins or goals that can be executed, the build profiles, and so on.
+ 
+POM
+//preparing property file for url and browser
+=================================================
+Browser = firefox
+Url = http://webapp.qedgetech.com/
+===============================================
+
+//preparing Pom for login page
+===========================================
+package applicationLayer;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class LoginPage {
+	
+//Define Repository for login
+	@FindBy(xpath = "//button[@id='btnreset']")
+	WebElement ObjReset;
+	@FindBy(id ="username")
+	WebElement ObjUser;
+	@FindBy(name ="password")
+	WebElement Objpass;
+	@FindBy(xpath = "//button[@id='btnsubmit']")
+	WebElement ObjLogin;
+	//write method to perform action
+	public void adminLogin(String user,String pass)
+	{
+		ObjReset.click();
+		ObjUser.sendKeys(user);
+		Objpass.sendKeys(pass);
+		ObjLogin.click();
+	}
+}
+
+======================================================================
+//Preparing Pom for Supplier page
+=========================================================================
+package applicationLayer;
+
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Reporter;
+
+public class SupplierPage {
+	WebDriver driver;
+	WebDriverWait wait;
+	public SupplierPage(WebDriver driver)
+	{
+		this.driver=driver;
+	}
+	@FindBy(xpath="(//a[text()='Suppliers'])[2]")
+	WebElement clickSuppierlink;
+	@FindBy(xpath="(//span[@data-caption='Add'])[1]")
+	WebElement clickAddIcon;
+	@FindBy(name="x_Supplier_Number")
+	WebElement SupplierNumber;
+	@FindBy(name="x_Supplier_Name")
+	WebElement SupplierName;
+	@FindBy(name="x_Address")
+	WebElement Address;
+	@FindBy(name="x_City")
+	WebElement City;
+	@FindBy(name="x_Country")
+	WebElement Country;
+	@FindBy(name="x_Contact_Person")
+	WebElement ContactPerson;
+	@FindBy(name="x_Phone_Number")
+	WebElement PhoneNumber;
+	@FindBy(name="x__Email")
+	WebElement Email;
+	@FindBy(name="x_Mobile_Number")
+	WebElement MobileNumber;
+	@FindBy(name="x_Notes")
+	WebElement Notes;
+	@FindBy(name="btnAction")
+	WebElement ClickAddBtn;
+	@FindBy(xpath="//button[contains(text(),'OK!')]")
+	WebElement clickConfirmOkBtn;
+	@FindBy(xpath="(//button[text()='OK'])[6]")
+	WebElement clickAlertOkBtn;
+	@FindBy(xpath="//span[@data-caption='Search']")
+	WebElement clickSearchPanelBtn;
+	@FindBy(name="psearch")
+	WebElement SearchTextbox;
+	@FindBy(name="btnsubmit")
+	WebElement SearchBtn;
+	@FindBy(xpath = "//table[@class='table ewTable']/tbody/tr[1]/td[6]/div/span/span")
+	WebElement webTable;
+	//method for supplier creation
+	public boolean addSupplier(String SupplierName,String Address,String City,String Country,
+			String contactPerson,String PhoneNumber,String email,String MobileNumber,String Notes) throws Throwable
+	{
+		Actions ac = new Actions(driver);
+		ac.moveToElement(this.clickSuppierlink).click().perform();
+		Thread.sleep(2000);
+		ac.moveToElement(this.clickAddIcon).click().perform();
+		Thread.sleep(2000);
+		String Exp_Data = this.SupplierNumber.getAttribute("value");
+		this.SupplierName.sendKeys(SupplierName);
+		this.Address.sendKeys(Address);
+		this.City.sendKeys(City);
+		this.Country.sendKeys(Country);
+		this.ContactPerson.sendKeys(contactPerson);
+		this.PhoneNumber.sendKeys(PhoneNumber);
+		this.Email.sendKeys(email);
+		this.MobileNumber.sendKeys(MobileNumber);
+		this.Notes.sendKeys(Notes);
+		this.ClickAddBtn.sendKeys(Keys.ENTER);
+		Thread.sleep(2000);
+		this.clickConfirmOkBtn.click();
+		Thread.sleep(2000);
+		this.clickAlertOkBtn.click();
+		Thread.sleep(2000);
+		if(!this.SearchTextbox.isDisplayed())
+			this.clickSearchPanelBtn.click();
+		this.SearchTextbox.clear();
+		this.SearchTextbox.sendKeys(Exp_Data);
+		this.SearchBtn.click();
+		Thread.sleep(3000);
+		String Act_Data =webTable.getText();
+		if(Act_Data.equals(Exp_Data))
+		{
+			Reporter.log("Add Supplier is Success:::"+Exp_Data+"      "+Act_Data,true);
+			return true;
+		}
+		else
+		{
+			Reporter.log("Add Supplier is Fail:::"+Exp_Data+"      "+Act_Data,true);
+			return false;
+		}
+		
+	}
+}
+
+
+
+
+===========================================================================
+//preparing pom for Logout page
+===============================================================================
+package applicationLayer;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class LogoutPage {
+@FindBy(xpath = "(//a[starts-with(text(),' Logout')])[2]")
+WebElement logoutClick;
+public void adminLogout()
+{
+	logoutClick.click();
+}
+
+}
+
+
+
+
+
+====================================================================================
+//preparing Apputil1 Class for preconditions and post conditions
+======================================================================================
+package config;
+
+import java.io.FileInputStream;
+import java.time.Duration;
+import java.util.Properties;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+
+import applicationLayer.LoginPage;
+import applicationLayer.LogoutPage;
+
+public class AppUtil1 {
+public static WebDriver driver;
+public static Properties conpro;
+@BeforeTest
+public static void setUp()throws Throwable
+
+{
+	conpro= new Properties();
+	conpro.load(new FileInputStream("./PropertyFiles/Environment.properties"));
+	if(conpro.getProperty("Browser").equalsIgnoreCase("chrome"))
+	{
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get(conpro.getProperty("Url"));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		LoginPage login =PageFactory.initElements(driver, LoginPage.class);
+		//call login method
+		login.adminLogin("admin", "master");
+		
+	}
+	else if(conpro.getProperty("Browser").equalsIgnoreCase("firefox"))
+	{
+		driver = new FirefoxDriver();
+		driver.get(conpro.getProperty("Url"));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		LoginPage login =PageFactory.initElements(driver, LoginPage.class);
+		//call login method
+		login.adminLogin("admin", "master");
+	}
+}
+@AfterTest
+public static void tearDown()
+{
+	LogoutPage logut =PageFactory.initElements(driver, LogoutPage.class);
+	logut.adminLogout();
+	driver.quit();
+}
+}
+
+
+
+
+
+
+
+
+
+==========================================================================================
+//preparing TestScript class for supplier Test case
+=============================================================================================
+package driverFactory;
+
+import org.openqa.selenium.support.PageFactory;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
+import applicationLayer.SupplierPage;
+import config.AppUtil1;
+import utilities.ExcelFileUtil;
+
+public class TestScript extends AppUtil1{
+String inputpath ="./FileInput/SupplierData.xlsx";
+String outputpath="./FileOutput/SupplierResults.xlsx";
+ExtentReports reports;
+ExtentTest logger;
+String TCsheet ="Supplier";
+@Test
+public void startTest() throws Throwable
+{
+	reports = new ExtentReports("./ExtentReports/Supplier.html");
+	ExcelFileUtil xl = new ExcelFileUtil(inputpath);
+	int rc = xl.rowCount(TCsheet);
+	Reporter.log("No of rows are::"+rc,true);
+	for(int i=1;i<=rc;i++)
+	{
+		logger =reports.startTest("Validate Supplier Test");
+		String sname = xl.getCellData(TCsheet, i, 0);
+		String address = xl.getCellData(TCsheet, i, 1);
+		String city = xl.getCellData(TCsheet, i, 2);
+		String country = xl.getCellData(TCsheet, i, 3);
+		String cperson = xl.getCellData(TCsheet, i, 4);
+		String pnumber = xl.getCellData(TCsheet, i, 5);
+		String email = xl.getCellData(TCsheet, i, 6);
+		String mnumber = xl.getCellData(TCsheet, i, 7);
+		String notes = xl.getCellData(TCsheet, i, 8);
+		logger.log(LogStatus.INFO, sname+"  "+address+"   "+city+"   "+country+"   "+cperson+"   "+pnumber+"   "+email+"    "+mnumber+"   "+notes);
+		SupplierPage sup =PageFactory.initElements(driver, SupplierPage.class);
+		boolean res = sup.addSupplier(sname, address, city, country, cperson, pnumber, email, mnumber, notes);
+		if(res)
+		{
+			xl.setCellData(TCsheet, i, 9, "Pass", outputpath);
+			logger.log(LogStatus.PASS, "Add Supplier Success");
+		}
+		else
+		{
+			xl.setCellData(TCsheet, i, 9, "Fail", outputpath);
+			logger.log(LogStatus.FAIL, "Add Supplier Fail");
+		}
+		reports.endTest(logger);
+		reports.flush();
+		
+	}
+	
+}
+}
+
+28-08-2024
+
+ What is Page Object model using Selenium Webdriver?
+1- It is design pattern in which will help you to maintain the code and code duplication, which is a crucial thing in Test automation.
+2- You can store all locators and respective methods in the separate class and Call them from the test in which you have to use. So the benefit from this will be if any changes in Page then you do not have to modify the test simply modify the respective page and that all.
+3- You can create a layer between your test script and application page, which you have to automate.
+4- In other words, it will behave as Object repository where all locators are saved.
+ Implementation of Page Object model using Selenium Webdriver
+1 – Page Object model without PageFactory
+2- Page Object Model with Pagefactory.
+Selenium has built in class called PageFactory, which they mainly created for Page Object purpose, which allows you to store elements.
+Advantages of using Page Object Model
+•	Increases code reusability - code to work with events of a page is written only once and used in different test cases
+•	Improves code maintainability - any UI change leads to updating the code in page object classes only leaving the test classes unaffected
+•	Makes code more readable and easy to understand.
+How to store locators
+@FindBy(locataorname=”value”)
+Webelement   user;
+
+
+
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+
+* This class will store all the locator and methods of login page
+*
+*/
+public class LoginPage 
+{
+
+WebDriver driver;
+
+
+
+By username=By.id("user_login");
+By password=By.xpath(".//*[@id='user_pass']");
+By loginButton=By.name("wp-submit");
+
+
+public LoginPage(WebDriver driver)
+{
+this.driver=driver;
+}
+
+
+public void loginToWordpress(String userid,String pass)
+{
+
+driver.findElement(username).sendKeys(userid);
+driver.findElement(password).sendKeys(pass);
+driver.findElement(loginButton).click();
+
+}
+
+
+public void typeUserName(String uid)
+{
+
+driver.findElement(username).sendKeys(uid);
+}
+
+public void typePassword(String pass)
+{
+
+driver.findElement(password).sendKeys(pass);
+}
+
+public void clickOnLoginButton()
+{
+driver.findElement(loginButton).click();
+}
+}
+
+
+package com.wordpress.Testcases;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.Test;
+
+import com.wordpress.Pages.LoginPage;
+
+public class VerifyWordpressLogin 
+{
+
+
+@Test
+public void verifyValidLogin()
+{
+
+WebDriver driver=new FirefoxDriver();
+
+driver.manage().window().maximize();
+
+driver.get("http://demosite.center/wordpress/wp-login.php");
+
+LoginPage login=new LoginPage(driver);
+
+
+
+login.clickOnLoginButton();
+
+
+driver.quit();
+
+}
+
+
+}
+
+
+Page Object Model using Selenium Webdriver with Page Factory
+Selenium has built in class called PageFactory, which they mainly created for Page Object purpose, which allows you to store elements in cache lookup.
+The only difference, which you will get without PageFactory and with PageFactory, is just initElement statement.Let us check the code and will see what changes required for with PageFactory Approach
+Code for Page Object Model Using Selenium Webdriver using Page Factory
+
+http://artoftesting.com/automationTesting/pageObjectModel.html
+29-08-2024
+HYBRID FRAME WORK
+//preparing Property file
+==============================================
+Browser = chrome
+Url = http://webapp.qedgetech.com/
+
+===============================================
+
+//preparing function library  class
+==================================================
+package commonFunctions;
+
+import java.io.FileInputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.Date;
+import java.util.Properties;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.Reporter;
+
+public class FunctionLibrary {
+public static WebDriver driver;
+public static Properties conpro;
+//method for launch ing browser
+public static WebDriver startBrowser()throws Throwable
+{
+	conpro = new Properties();
+	conpro.load(new FileInputStream("./PropertyFiles\\Environment.properties"));
+	if(conpro.getProperty("Browser").equalsIgnoreCase("chrome"))
+	{
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+	}
+	else if(conpro.getProperty("Browser").equalsIgnoreCase("firefox"))
+	{
+		driver = new FirefoxDriver();
+	}
+	else
+	{
+		Reporter.log("Browser value is Not Matching",true);
+	}
+	return driver;
+}
+//method for launch url
+public static void openUrl()
+{
+	driver.get(conpro.getProperty("Url"));
+}
+//method for wait for any webelement 
+public static void waitForElement(String LocatorType,String LocatorValue,String TestData)
+{
+WebDriverWait mywait = new WebDriverWait(driver, Duration.ofSeconds(Integer.parseInt(TestData)));
+if(LocatorType.equalsIgnoreCase("xpath"))
+{
+	mywait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(LocatorValue)));
+}
+if(LocatorType.equalsIgnoreCase("id"))
+{
+	mywait.until(ExpectedConditions.visibilityOfElementLocated(By.id(LocatorValue)));
+}
+if(LocatorType.equalsIgnoreCase("name"))
+{
+	mywait.until(ExpectedConditions.visibilityOfElementLocated(By.name(LocatorValue)));
+}
+}
+//method for any textbox
+public static void typeAction(String LocatorType,String LocatorValue,String TestData)
+{
+	if(LocatorType.equalsIgnoreCase("xpath"))
+	{
+		driver.findElement(By.xpath(LocatorValue)).clear();
+		driver.findElement(By.xpath(LocatorValue)).sendKeys(TestData);
+	}
+	if(LocatorType.equalsIgnoreCase("id"))
+	{
+		driver.findElement(By.id(LocatorValue)).clear();
+		driver.findElement(By.id(LocatorValue)).sendKeys(TestData);
+	}
+	if(LocatorType.equalsIgnoreCase("name"))
+	{
+		driver.findElement(By.name(LocatorValue)).clear();
+		driver.findElement(By.name(LocatorValue)).sendKeys(TestData);
+	}
+	
+}
+//method for click elements like buttons,images,links,checkboxes and radio button
+public static void clickAction(String LocatorType,String LocatorValue)
+{
+	if(LocatorType.equalsIgnoreCase("xpath"))
+	{
+		driver.findElement(By.xpath(LocatorValue)).click();
+	}
+	if(LocatorType.equalsIgnoreCase("name"))
+	{
+		driver.findElement(By.name(LocatorValue)).click();
+	}
+	if(LocatorType.equalsIgnoreCase("id"))
+	{
+		driver.findElement(By.id(LocatorValue)).sendKeys(Keys.ENTER);
+	}
+}
+//method for validating title
+public static void validateTitle(String Expected_Title)
+{
+	String Actual_Title = driver.getTitle();
+	try {
+	Assert.assertEquals(Actual_Title, Expected_Title, "Title is Not matching");
+	}catch(Throwable t)
+	{
+		System.out.println(t.getMessage());
+	}
+}
+//method for closing browser
+public static void closeBrowser()
+{
+	driver.quit();
+}
+//method for gneratedate
+public static String generateDate()
+{
+	Date date = new Date();
+	DateFormat df = new SimpleDateFormat("YYYY_MM_dd hh_mm_ss");
+	return df.format(date);
+}
+}
+======================================
+
+02-09-2024
+=========================================================
+search-panel = //span[@data-caption='Search']
+search-textbox = //input[@id='psearch']
+search-button = //button[@id='btnsubmit']
+============================================================
+//method for selecting items in listboxes
+public static void dropDownAction(String LocatorType,String Locatorvalue,String TestData)
+{
+	if(LocatorType.equalsIgnoreCase("name"))
+	{
+		int value = Integer.parseInt(TestData);
+		Select element = new Select(driver.findElement(By.name(Locatorvalue)));
+		element.selectByIndex(value);
+		
+	}
+	if(LocatorType.equalsIgnoreCase("xpath"))
+	{
+		int value = Integer.parseInt(TestData);
+		Select element = new Select(driver.findElement(By.xpath(Locatorvalue)));
+		element.selectByIndex(value);
+	}
+	if(LocatorType.equalsIgnoreCase("id"))
+	{
+		int value = Integer.parseInt(TestData);
+		Select element = new Select(driver.findElement(By.id(Locatorvalue)));
+		element.selectByIndex(value);
+	}
+}
+//method for capture stock number into note pad
+public static void captureStock(String LocatorType,String LocatorValue)throws Throwable
+{
+	String stockNum="";
+	if(LocatorType.equalsIgnoreCase("name"))
+	{
+		stockNum =driver.findElement(By.name(LocatorValue)).getAttribute("value");
+		
+	}
+	if(LocatorType.equalsIgnoreCase("xpath"))
+	{
+		stockNum =driver.findElement(By.xpath(LocatorValue)).getAttribute("value");
+		
+	}
+	if(LocatorType.equalsIgnoreCase("id"))
+	{
+		stockNum =driver.findElement(By.id(LocatorValue)).getAttribute("value");
+		
+	}
+	//create new notepad into capturedata folder
+	FileWriter fw = new FileWriter("./CaptureData/stockNumber.txt");
+	BufferedWriter bw =new BufferedWriter(fw);
+	bw.write(stockNum);
+	bw.flush();
+	bw.close();
+	
+	
+}
+//verify stock number from stock table
+public static void stockTable()throws Throwable
+{
+	//read stock number from above notepad
+	FileReader fr = new FileReader("./CaptureData/stockNumber.txt");
+	BufferedReader br = new BufferedReader(fr);
+	//read stock number from notepad
+	String Exp_Data =br.readLine();
+	if(!driver.findElement(By.xpath(conpro.getProperty("search-textbox"))).isDisplayed())
+		driver.findElement(By.xpath(conpro.getProperty("search-panel"))).click();
+	driver.findElement(By.xpath(conpro.getProperty("search-textbox"))).clear();
+	//enter stock number into textbox
+	driver.findElement(By.xpath(conpro.getProperty("search-textbox"))).sendKeys(Exp_Data);
+	//click search button
+	driver.findElement(By.xpath(conpro.getProperty("search-button"))).click();
+	Thread.sleep(4000);
+	String Act_Data = driver.findElement(By.xpath("//table[@class='table ewTable']/tbody/tr[1]/td[8]/div/span/span")).getText();
+	Reporter.log(Exp_Data+"     "+Act_Data,true);
+	try {
+	Assert.assertEquals(Act_Data, Exp_Data, "Stock Number Not Matching");
+	}catch(Throwable t)
+	{
+		System.out.println(t.getMessage());
+	}
+}
+03=09=2024
+
+//method capture supplier number into note pad
+public static void captureSup(String LocatorName,String LocatorValue)throws Throwable
+{
+	String supplierNum="";
+	if(LocatorName.equalsIgnoreCase("xpath"))
+	{
+		supplierNum = driver.findElement(By.xpath(LocatorValue)).getAttribute("value");
+	}
+	if(LocatorName.equalsIgnoreCase("name"))
+	{
+		supplierNum = driver.findElement(By.name(LocatorValue)).getAttribute("value");
+	}
+	if(LocatorName.equalsIgnoreCase("id"))
+	{
+		supplierNum = driver.findElement(By.id(LocatorValue)).getAttribute("value");
+	}
+	//create note pad and write supplier number
+	FileWriter fw = new FileWriter("./CaptureData/suppliernumber.txt");
+	BufferedWriter bw = new BufferedWriter(fw);
+	bw.write(supplierNum);
+	bw.flush();
+	bw.close();
+}
+03-09-2024
+package driverFactory;
+
+import org.openqa.selenium.WebDriver;
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+
+import commonFunctions.FunctionLibrary;
+import utilities.ExcelFileUtil;
+
+public class DriverScript {
+String inputpath ="./FileInput/Controller.xlsx";
+String outputpath ="./FileOutput/HyridResults.xlsx";
+ExtentReports reports;
+ExtentTest logger;
+public static WebDriver driver;
+String TCSheet ="MasterTestCases";
+public void startTest() throws Throwable
+{
+	String Module_Status="";
+	String Module_New="";
+	//create instance object for Excelfile util class
+	ExcelFileUtil xl = new ExcelFileUtil(inputpath);
+	//iterate all rows in TCSheet
+	for(int i=1;i<=xl.rowCount(TCSheet);i++)
+	{
+		if(xl.getCellData(TCSheet, i, 2).equalsIgnoreCase("Y"))
+		{
+			//read corresponding sheet into TCMOdule variable
+			String TCModule =xl.getCellData(TCSheet, i, 1);
+			//iterate all rows in TCModule
+			for(int j=1;j<=xl.rowCount(TCModule);j++)
+			{
+				String Description = xl.getCellData(TCModule, j, 0);
+				String Object_Type = xl.getCellData(TCModule, j, 1);
+				String Ltype = xl.getCellData(TCModule, j, 2);
+				String LValue = xl.getCellData(TCModule, j, 3);
+				String TData = xl.getCellData(TCModule, j, 4);
+				try {
+					if(Object_Type.equalsIgnoreCase("startBrowser"))
+					{
+						driver =FunctionLibrary.startBrowser();
+					}
+					if(Object_Type.equalsIgnoreCase("openUrl"))
+					{
+						FunctionLibrary.openUrl();
+					}
+					if(Object_Type.equalsIgnoreCase("waitForElement"))
+					{
+						FunctionLibrary.waitForElement(Ltype, LValue, TData);
+					}
+					if(Object_Type.equalsIgnoreCase("typeAction"))
+					{
+						FunctionLibrary.typeAction(Ltype, LValue, TData);
+					}
+					if(Object_Type.equalsIgnoreCase("clickAction"))
+					{
+						FunctionLibrary.clickAction(Ltype, LValue);
+					}
+					if(Object_Type.equalsIgnoreCase("validateTitle"))
+					{
+						FunctionLibrary.validateTitle(TData);
+					}
+					if(Object_Type.equalsIgnoreCase("closeBrowser"))
+					{
+						FunctionLibrary.closeBrowser();
+					}
+					if(Object_Type.equalsIgnoreCase("dropDownAction"))
+					{
+						FunctionLibrary.dropDownAction(Ltype, LValue, TData);
+					}
+					if(Object_Type.equalsIgnoreCase("captureStock"))
+					{
+						FunctionLibrary.captureStock(Ltype, LValue);
+					}
+					if(Object_Type.equalsIgnoreCase("stockTable"))
+					{
+						FunctionLibrary.stockTable();
+					}
+					
+					//write as pass into status cell in TCModule
+					xl.setCellData(TCModule, j, 5, "Pass", outputpath);
+					Module_Status="True";;
+				}catch(Exception e)
+				{
+					System.out.println(e.getMessage());
+					//write as Fail into status cell in TCModule
+					xl.setCellData(TCModule, j, 5, "Fail", outputpath);
+					Module_New="False";
+				}
+				if(Module_Status.equalsIgnoreCase("True"))
+				{
+					xl.setCellData(TCSheet, i, 3, "Pass", outputpath);
+				}
+				if(Module_New.equalsIgnoreCase("False"))
+				{
+					xl.setCellData(TCSheet, i, 3, "Fail", outputpath);
+				}
+				
+			}
+			
+		}
+		else
+		{
+			//write as blocked into status cell in TCsheet
+			xl.setCellData(TCSheet, i, 3, "Blocked", outputpath);
+		}
+	}
+}
+}
+
+==================================================================
+//preparing apptest
+===================================================================
+package driverFactory;
+
+import org.testng.annotations.Test;
+
+public class AppTest {
+@Test
+public void kickStart() throws Throwable
+{
+	DriverScript ds = new DriverScript();
+	ds.startTest();
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
