@@ -1,0 +1,15 @@
+Core Java Concepts
+🔹 OOP Principles (Object-Oriented Programming)
+
+Class & Objects
+Inheritance
+Polymorphism
+Abstraction & Encapsulation
+🔹 Java Collections Framework
+
+List, Set, Map, Queue (ArrayList, HashMap, HashSet, LinkedList, etc.)
+Iterators and Streams API for Data Handling
+🔹 Exception Handling
+
+Try-Catch, Throws, Finally
+Custom Exceptions
